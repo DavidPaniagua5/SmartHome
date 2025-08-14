@@ -1,0 +1,27 @@
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: width 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .nav-link {
+  color: #adb5bd;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  color: #fff;
+}
+
+.sidebar .nav-link.active {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.sidebar h2 {
+  font-weight: bold;
+}

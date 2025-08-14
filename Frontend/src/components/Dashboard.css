@@ -1,0 +1,44 @@
+/* Estilos generales del dashboard */
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #e9ecef; /* Un gris más claro para el fondo */
+}
+
+.content-area {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Estilos para las tarjetas (widgets) */
+.card {
+  border-radius: 1rem;
+  border: none;
+  background-color: #fff;
+}
+
+/* Estilos para los gráficos (placeholders) */
+.progress {
+  height: 10px;
+}
+
+.progress-bar {
+  border-radius: 50px;
+}
+
+/* Estilos de la fuente para que se parezca a la plantilla */
+.card-title {
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.card-text {
+  color: #495057;
+}
+
+/* Espacio entre las tarjetas */
+.g-3 > .col,
+.g-3 > [class*='col-'] {
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-top: 1.5rem;
+}
