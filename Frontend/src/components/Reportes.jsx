@@ -37,11 +37,11 @@ const Reportes = () => {
 
   // Preparar los datos para la gráfica
   const chartData = {
-    labels: readings.map(reading => `${reading.fecha} ${reading.hora}`),
+    labels: readings.map(reading => `${reading.timestamp} `),
     datasets: [
       {
         label: 'Temperatura (°C)',
-        data: readings.map(reading => reading.temperatura),
+        data: readings.map(reading => reading.temperature),
         borderColor: '#ff8000ff',
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color del área bajo la línea
         tension: 0.4,
@@ -103,9 +103,9 @@ const Reportes = () => {
                 <tbody>
                   {readings.map((reading, index) => (
                     <tr key={index}>
-                      <td>{reading.fecha}</td>
+                      <td>{reading.timestamp}</td>
                       <td>{reading.hora}</td>
-                      <td>{reading.temperatura}</td>
+                      <td>{reading.temperature}</td>
                     </tr>
                   ))}
                 </tbody>
