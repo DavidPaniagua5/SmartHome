@@ -14,9 +14,9 @@ const Dashboard = () => {
   
 
   return (
-    <div className="d-flex dashboard-container">
+    <div className="d-flex dashboard-container" >
       <Sidebar handleLogout={handleLogout} />
-      <div className="content-area p-4">
+      <div className="content-area p-4 "style={{ marginLeft: '250px' }}>
         <Outlet />
       </div>
     </div>

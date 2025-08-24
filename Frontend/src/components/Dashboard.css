@@ -1,7 +1,7 @@
 /* Estilos generales del dashboard */
 .dashboard-container {
   min-height: 100vh;
-  background-color: #e9ecef; /* Un gris más claro para el fondo */
+  background-color: #1d2227; /* Un gris más claro para el fondo */
 }
 
 .content-area {
@@ -13,7 +13,7 @@
 .card {
   border-radius: 1rem;
   border: none;
-  background-color: #fff;
+  background-color: #868282;
 }
 
 /* Estilos para los gráficos (placeholders) */
@@ -28,11 +28,11 @@
 /* Estilos de la fuente para que se parezca a la plantilla */
 .card-title {
   font-weight: 500;
-  color: #6c757d;
+  color: #ffffff;
 }
 
 .card-text {
-  color: #495057;
+  color: #2a73bb;
 }
 
 /* Espacio entre las tarjetas */

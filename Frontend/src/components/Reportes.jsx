@@ -14,7 +14,7 @@ const Reportes = () => {
   useEffect(() => {
     const fetchReadings = async () => {
       try {
-        const response = await fetch('http://localhost:3000/readings');
+        const response = await fetch('http://localhost:3000/lecturas/temperatura');
         if (!response.ok) {
           throw new Error('Error al obtener los datos del servidor');
         }
@@ -37,7 +37,7 @@ const Reportes = () => {
 
   // Preparar los datos para la gráfica
   const chartData = {
-    labels: readings.map(reading => `${reading.timestamp} `),
+    labels: readings.map(reading => `${reading.fecha} - ${reading.hora} `),
     datasets: [
       {
         label: 'Temperatura (°C)',
@@ -91,6 +91,10 @@ const Reportes = () => {
         <div className="col-12">
           <div className="card shadow-sm h-100 p-3">
             <h5 className="card-title mb-3">Datos de Temperatura</h5>
+            <div className='mb-3'>
+                <buton className="btn rounded-pill btn-filtros"> Ordenar por fecha</buton>
+                <buton className="btn rounded-pill btn-filtros"> Ordenar por hora</buton>
+            </div>
             <div className="table-responsive">
               <table className="table table-striped table-hover">
                 <thead className="table-dark">
@@ -103,7 +107,7 @@ const Reportes = () => {
                 <tbody>
                   {readings.map((reading, index) => (
                     <tr key={index}>
-                      <td>{reading.timestamp}</td>
+                      <td>{reading.fecha}</td>
                       <td>{reading.hora}</td>
                       <td>{reading.temperature}</td>
                     </tr>

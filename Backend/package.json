@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bootstrap": "^5.3.7",
     "chart.js": "^4.5.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
@@ -20,6 +21,7 @@
     "morgan": "^1.10.1",
     "mqtt": "^5.14.0",
     "nodemon": "^3.1.10",
+    "react-bootstrap": "^2.10.10",
     "react-chartjs-2": "^5.3.0",
     "socket.io": "^4.8.1"
   }
