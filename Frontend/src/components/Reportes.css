@@ -13,3 +13,14 @@
   background-color: #343a40;
   color: #fff;
 }
+
+.btn-filtros{
+  background-color: rgb(247, 202, 143);
+  margin-right:  20px;
+  color: #000000;
+}
+
+.btn-filtros:hover {
+background-color: rgb(246, 177, 87);
+color: #ffffff;
+}

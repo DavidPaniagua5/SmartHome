@@ -1,36 +1,33 @@
-/* src/components/Control.css */
-
 .led-indicator {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   border: 2px solid #000000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
-
-
-/* Sobrescribe los estilos del botón .btn-success */
-.btn-encendido {
-  color: #fff; /* Color del texto */
-  width: 15rem;
-  background-color: #f3ef36; /* Tu nuevo color de fondo (por ejemplo, naranja) */
-  border-color: #000000; /* Tu nuevo color de borde */
-}
-
-.btn-encendido:hover {
-  color: #000000;
-  background-color: #e64a19; /* Un tono más oscuro para el hover */
-  border-color: #e64a19;
-}
-
-.btn-encendido:active {
-  color: #fff;
-  background-color: #d84315; /* Otro tono para el estado activo */
-  border-color: #d84315;
-}
-
 .f-encendido {
-  color: #fbff00; /* O cualquier código hexadecimal, nombre de color o valor RGB */
+  color: #fdff6b; 
+}
+
+.form-switch .form-check-input {
+  height: 2.5em; 
+  width: 7em; 
+}
+
+.form-switch .form-check-input:checked {
+  background-position: right center;
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translateX(1.5em); 
+}
+
+h1{
+  color: #ffffff;
+}
+.card-color {
+  background-color: #8c8d92; 
+  color: white; 
 }
