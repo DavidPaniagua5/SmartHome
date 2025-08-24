@@ -41,7 +41,6 @@ clientMqtt.on('connect', function () {
 
 //Suscripcion al canal de /ilumination
 clientMqtt.subscribe('/ilumination');
-clientMqtt.subscribe('/entrance');
 
 clientMqtt.on('error', function (error) {
     console.log(error);
@@ -82,6 +81,8 @@ function hexToRgb(hex) {
 }
 
 
+
+
 async function connectDB() {
   try {
     await client.connect();
@@ -108,7 +109,7 @@ async function getLatestReading() {
 }
 
 
-app.get('/lecturas/temperatura', async (req, res) => {
+app.get('/readings', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 50;
@@ -121,23 +122,10 @@ app.get('/lecturas/temperatura', async (req, res) => {
       .limit(limit)
       .toArray();
     
-  const total = await collection.countDocuments();
-
-  const newReadings = readings.map(reading => {
-  const dateObject = new Date(reading.timestamp);
-  const fecha = dateObject.toLocaleDateString();
-  const hora = dateObject.toLocaleTimeString();
-  return {
-    ...reading,
-    fecha,
-    hora,
-  };
-});
-
-console.log(newReadings);
-
+    const total = await collection.countDocuments();
+    
     res.json({
-      data: newReadings,
+      data: readings,
       pagination: {
         page,
         limit,
@@ -160,17 +148,12 @@ app.post('/led/rgb', (req,res) => {
     const colorRgb = hexToRgb(data.color);
     console.log(colorRgb);
     
-    var valor = "LEDRGB:";
-    valor += parseInt(colorRgb.r)
-    valor += ","
-    valor += parseInt(colorRgb.g)
-    valor += ","
-    valor += parseInt(colorRgb.b)
-    clientMqtt.publish('/ilumination', valor);
-    res.json({State: 'Encendido'});
+    clientMqtt.publish('/ilumination', 'LEDRGB:');
+    res.send("Encendido")
   }else if(data.estado == "Apagado"){
     clientMqtt.publish('/ilumination', 'LEDRGB:OFF');  
-    res.json({State:'Apagado'});
+    console.log("Apagado")
+    res.send("Apagado");
   }
 }
 catch (error){
@@ -238,23 +221,6 @@ app.post('/led/3/off', (req, res) => {
     res.status(500).json({ error: 'Error del servidor' });
   }
 });
-
-app.post( '/porton', (req,res) =>{
-try {
-  const resp = req.body;
-  console.log(resp);
-  if(resp.estado == "abrir"){
-  clientMqtt.publish('/entrance', 'ON');
-  res.json({State: 'Abierto'});
-  } else {
-   res.json({error: 'Comando invalido'});
-  }
-} catch (error) {
-  console.error('Error conectando con el porton', error)
-  res.status(500).json({ error: 'Error del servidor'})
-}
-});
-
 
 app.get('/', (req,res) => {
     res.send("Inicio");

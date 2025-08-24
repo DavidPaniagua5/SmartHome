@@ -4,7 +4,7 @@ import './Sidebar.css';
 
 const Sidebar = ({ handleLogout }) => {
   return (
-    <div className="sidebar bg-dark text-white p-3 vh-100 position-fixed">
+    <div className="sidebar bg-dark text-white p-3">
       <h2 className="text-center mb-4">SmartHome</h2>
       <ul className="nav flex-column">
         <li className="nav-item">
@@ -24,17 +24,7 @@ const Sidebar = ({ handleLogout }) => {
               isActive ? 'nav-link active' : 'nav-link'
             }
           >
-            Reporte de temperatura
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            to="reporte"
-            className={({ isActive }) =>
-              isActive ? 'nav-link active' : 'nav-link'
-            }
-          >
-            Reporte de actuadores
+            Reportes
           </NavLink>
         </li>
         <li className="nav-item">
