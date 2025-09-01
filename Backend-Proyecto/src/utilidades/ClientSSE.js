@@ -4,15 +4,16 @@ export const iniciarClienteSSE = (req, res) => {
   // Escucha los mensajes entrantes de MQTT
   clienteMqtt.on("message", (topic, message) => {
     const msg = message.toString();
-    console.log(topic);
-    console.log(msg);
-    if (topic === "/alerts" && msg == "ALERT:ON") {
+    if (topic === "/alerts" && msg == "TEMPERATURA CRITICA MAYOR A 26°C") {
       res.write(`data: ${msg}\n\n`);
     }
-    else if(topic === "/alerts" && msg == "ALERT:OFF"){
+    else if(topic === "/alerts" && msg == "LA TEMPERATURA HA BAJADO A VALORES NORMALES"){
       res.write(`data: ${msg}\n\n`);
     }
-    
+    else{
+      console.log(topic);
+      console.log(msg)
+    }
   });
 
   // Manejar el cierre de la conexión por parte del cliente

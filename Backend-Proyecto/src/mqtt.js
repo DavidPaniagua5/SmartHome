@@ -18,9 +18,9 @@ clienteMqtt.on('connect', function () {
     //Suscripcion al canal de /ilumination
     clienteMqtt.subscribe('/ilumination');
     clienteMqtt.subscribe('/alerts');
-    clienteMqtt.subscribe('/irrigation');
-    clienteMqtt.subscribe('/ventilation');
-    clienteMqtt.subscribe("sensores/temperatura");
+    clienteMqtt.subscribe('/fan');
+    clienteMqtt.subscribe('/entrance');
+    clienteMqtt.subscribe('/pump');
 });
 
 clienteMqtt.on('error', function (error) {

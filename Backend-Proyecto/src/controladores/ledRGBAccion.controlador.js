@@ -3,7 +3,7 @@ import clienteMqtt from "../mqtt.js";
 export const postLedRGBRojoEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:RED');
+        clienteMqtt.publish('/ilumination', 'RGB:RED');
         console.log('Recibida solicitud para encender el led en rojo:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -15,7 +15,7 @@ export const postLedRGBRojoEncender = async (req, res) => {
 export const postLedRGBAzulEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:BLUE');
+        clienteMqtt.publish('/ilumination', 'RGB:BLUE');
         console.log('Recibida solicitud para encender el led en azul:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -27,7 +27,7 @@ export const postLedRGBAzulEncender = async (req, res) => {
 export const postLedRGBVerdeEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:GREEN');
+        clienteMqtt.publish('/ilumination', 'RGB:GREEN');
         console.log('Recibida solicitud para encender el led en azul:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -39,7 +39,7 @@ export const postLedRGBVerdeEncender = async (req, res) => {
 export const postLedRGBMagentaEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:MAGENTA');
+        clienteMqtt.publish('/ilumination', 'RGB:MAGENTA');
         console.log('Recibida solicitud para encender el led en magenta:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -51,7 +51,7 @@ export const postLedRGBMagentaEncender = async (req, res) => {
 export const postLedRGBCyanEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:CYAN');
+        clienteMqtt.publish('/ilumination', 'RGB:CYAN');
         console.log('Recibida solicitud para encender el led en cyan:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -63,7 +63,7 @@ export const postLedRGBCyanEncender = async (req, res) => {
 export const postLedRGBAmarilloEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:YELLOW');
+        clienteMqtt.publish('/ilumination', 'RGB:YELLOW');
         console.log('Recibida solicitud para encender el led en amarillo:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -75,7 +75,7 @@ export const postLedRGBAmarilloEncender = async (req, res) => {
 export const postLedRGBBlancoEncender = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:WHITE');
+        clienteMqtt.publish('/ilumination', 'RGB:WHITE');
         console.log('Recibida solicitud para encender el led en blanco:', req.body)
         return res.send("Encendido")
     } catch (error) {
@@ -86,7 +86,7 @@ export const postLedRGBBlancoEncender = async (req, res) => {
 export const postLedRGBApagar = async (req, res) => {
 
     try {
-        clienteMqtt.publish('/ilumination', 'LEDRGB:OFF');
+        clienteMqtt.publish('/ilumination', 'RGB:OFF');
         console.log('Recibida solicitud para apagar el led rgb:', req.body)
         return res.send("Apagado")
     } catch (error) {

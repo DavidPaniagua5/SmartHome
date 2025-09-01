@@ -2,7 +2,6 @@ import express from "express"
 import morgan from "morgan";
 import cors from "cors";
 
-import usuarioRutas from "./rutas/usuario.ruta.js"; //Como se uso default, se puede importar con cualquier nombre
 import sensorHumTempRutas from "./rutas/sensorHumTemp.ruta.js";
 import sensorProximidad from "./rutas/sensorProximidad.ruta.js";
 import ledRGBAccion from "./rutas/ledRGBAccion.ruta.js";
@@ -28,7 +27,6 @@ app.use(cors());
 
 
 // Rutas
-app.use("/", usuarioRutas);
 app.use('/', sensorHumTempRutas);
 app.use('/', sensorProximidad);
 app.use('/', ledRGBAccion);
