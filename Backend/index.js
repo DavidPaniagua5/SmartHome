@@ -6,6 +6,8 @@ const mqtt = require('mqtt');
 
 require('dotenv').config();
 
+const clients = [];
+
 const port = 3000;
 //Mondgobd
 const uri = process.env.DB_URI;
@@ -42,6 +44,7 @@ clientMqtt.on('connect', function () {
 //Suscripcion al canal de /ilumination
 clientMqtt.subscribe('/ilumination');
 clientMqtt.subscribe('/entrance');
+clientMqtt.subscribe('/alerts');
 
 clientMqtt.on('error', function (error) {
     console.log(error);
@@ -111,7 +114,7 @@ async function getLatestReading() {
 app.get('/lecturas/temperatura', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 50;
+    const limit = parseInt(req.query.limit) || 150;
     const skip = (page - 1) * limit;
     
     const readings = await collection
@@ -244,7 +247,7 @@ try {
   const resp = req.body;
   console.log(resp);
   if(resp.estado == "abrir"){
-  clientMqtt.publish('/entrance', 'ON');
+  clientMqtt.publish('/entrance', 'Servo:ON');
   res.json({State: 'Abierto'});
   } else {
    res.json({error: 'Comando invalido'});
@@ -254,6 +257,16 @@ try {
   res.status(500).json({ error: 'Error del servidor'})
 }
 });
+
+
+function sendAlertUpdateToAllClients() {
+
+    const dataToSend = JSON.stringify();
+    clients.forEach(client => {
+        client.write(`data: ${dataToSend}\n\n`);
+    });
+    console.log('Datos de parqueo enviados a', clients.length, 'clientes SSE.');
+}
 
 
 app.get('/', (req,res) => {

@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert, Form } from 'react-bootstrap';
-import './Control.css'; 
-
+import './Control.css';
 
 const Control = () => {
   // Estados para los LEDs
-  const [ledRGBColor, setLedRGBColor] = useState('#ffffff');
+  const [ledRGBColor, setLedRGBColor] = useState('#000000');
   const [led1State, setLed1State] = useState(false);
   const [led2State, setLed2State] = useState(false);
   const [led3State, setLed3State] = useState(false);
 
+
   // Estado para la puerta
   const [doorState, setDoorState] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-
   // Funciones de control
-  const handleColorChange = (e) => setLedRGBColor(color);
+//  const handleColorChange = (e) => setLedRGBColor(color);
   const toggleLed1 = () => setLed1State(!led1State);
   const toggleLed2 = () => setLed2State(!led2State);
   const toggleLed3 = () => setLed3State(!led3State);
@@ -31,39 +29,55 @@ const Control = () => {
    const hideAlert = () => {
     setAlertState({ show: false, message: '', variant: '' });
   };
+
+
   //Funciones para conectar con el backend (envia señales de encendido y apagado para ser enviadas al canal de HiveMQ)
   //Funcion para encender/apagar led rgb
-  const handleClickRGB = async () => {
+
+  const handleColorChange = (e) => {
+    const nuevoColor = e.target.value;
+    setLedRGBColor(nuevoColor);
+    handleClickRGB(nuevoColor);
+  };
+  const handleClickRGB = async (color) => {
+
+    // Aquí usamos el color pasado como argumento
     try {
-      console.log(ledRGBColor);
+      const estado = (color === '#000000ff') ? 'Apagado' : 'Encendido';
+      console.log(color);
       const response = await fetch('http://localhost:3000/led/rgb', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ estado: 'Encendido', color: ledRGBColor }),
-        });
-        const dato = await response.json();
-        if(dato.State == "Encendido"){
-         setAlertState({
-        show: true,
-        message: "LED RGB ENCENDIDO CON ÉXITO",
-        variant: "success"
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ estado: 'Encendido', color: color }),
       });
-        }
-        else{
+      const dato = await response.json();
+      
+      if (dato.State === "Encendido") {
         setAlertState({
+          show: true,
+          message: "LED RGB ENCENDIDO CON ÉXITO",
+          variant: "success"
+        });
+      } else {
+        setAlertState({
+          show: true,
+          message: "ERROR AL ENCENDER EL LED, INTENTE DE NUEVO",
+          variant: "danger"
+        });
+      }
+      setTimeout(hideAlert, 3000);
+    } catch (error) {
+      console.error('Error al comunicarse con la API:', error);
+      setAlertState({
         show: true,
-        message: "ERROR AL ENCENDER EL LED, INTENTE DE NUEVO",
+        message: "Error de conexión con el servidor.",
         variant: "danger"
       });
-        }
-        setTimeout(hideAlert, 3000);
-
-      } catch (error) {
-      console.error('Error al comunicarse con la API:', error);
+      setTimeout(hideAlert, 3000);
     }
-  };  
+  }; 
 
   const handleClickRGB_A = async () =>{
     try{
@@ -74,6 +88,23 @@ const Control = () => {
           },
           body: JSON.stringify({ estado: 'Apagado'}),
         });
+
+        const dato = await response.json();
+      if (response.ok) {
+        setAlertState({
+          show: true,
+          message: "LED RGB apagado.",
+          variant: "info"
+        });
+        setLedRGBColor('#000000'); // Opcional: reiniciar el color
+      } else {
+        setAlertState({
+          show: true,
+          message: "Error al apagar el LED.",
+          variant: "danger"
+        });
+      }
+      setTimeout(hideAlert, 3000);
     }
     catch (error){
     console.error('Error al comunicarse con la API:', error);
@@ -210,7 +241,8 @@ const toggleDoorWithDelay = async (e) => {
   };
 
 const ledIconClass = (state) => 
-    state ? 'bi bi-lightbulb-fill f-encendido' : 'bi bi-lightbulb text-muted';
+    state ? 'bi bi-lightbulb-fill f-encendido' : 'bi bi-lightbulb text-dark';
+
   return (
     
     <div className="container-fluid p-0">
@@ -274,16 +306,36 @@ const ledIconClass = (state) =>
         <div className="col-md-4">
           <div className="card shadow-sm h-100 p-3 text-center card-color">
             <h5 className="card-title">LED RGB</h5>
+                            <i 
+                             className={`fs-1 bi bi-lightbulb${ledRGBColor === '#000000' ? '' : '-fill'}`}
+                                style={{ color: ledRGBColor, transition: 'color 0.5s' }}
+                            ></i>
+
             <div className="d-flex flex-column align-items-center">
-        <i className={`fs-1 ${ledIconClass(ledRGBColor)}`}></i>
+              {/* Aquí usamos el selector */}
+              <Form.Select 
+                aria-label="Selecciona un color" 
+                onChange={handleColorChange}
+                value={ledRGBColor} // Esto asegura que el selector refleje el color actual
+                className="mb-3"
+              >
+                <option value="#000000">Selecciona un color</option>
+                <option value="#FF0000">Rojo</option>
+                <option value="#00FF00">Verde</option>
+                <option value="#0000FF">Azul</option>
+              </Form.Select>
+                            
+
+              {/* Indicador visual del color seleccionado */}
+              {/* <div 
+                className="led-indicator" 
+                style={{ backgroundColor: ledRGBColor }}
+              ></div> */}
             </div>
-            <button onClick={handleClickRGB_A} className='btn btn-danger rounded-pill mb-2' > Rojo </button>
-            <button onClick={handleClickRGB_A} className='btn btn-success rounded-pill mb-2' > Verde </button>
-            <button onClick={handleClickRGB} className='btn btn-primary rounded-pill mb-2'> Azul </button>
             <button onClick={handleClickRGB_A} className='btn btn-danger rounded-pill mb-2' > Apagar </button>
           </div>
         </div>
-
+            
 
        {/* Tarjeta 5: Abrir Puerta */}
       <div className="col-md-4">
@@ -292,9 +344,9 @@ const ledIconClass = (state) =>
               <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">
                 {/* Icono de la puerta */}
                 {doorState ? (
-                  <i className="bi bi-door-open fs-1 mb-3"></i>
+                  <i className="bi bi-door-open fs-1 mb-3 text-dark"></i>
                 ) : (
-                  <i className="bi bi-door-closed fs-1 mb-3"></i>
+                  <i className="bi bi-door-closed fs-1 mb-3 text-dark"></i>
                 )}
                 <button 
                   className={`btn ${doorState ? 'btn-warning' : 'btn-success'} w-50 rounded-pill`} 
